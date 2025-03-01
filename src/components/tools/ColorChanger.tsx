@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import { 
-  Box, 
-  Button, 
-  Typography, 
-  Paper, 
-  Grid, 
+import {
+  Box,
+  Button,
+  Typography,
+  Paper,
+  Grid,
   Slider,
   Alert,
   CircularProgress
@@ -14,8 +14,10 @@ import {
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DownloadIcon from '@mui/icons-material/Download';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
+import { getTranslations } from '@/lib/i18n';
 
 export default function ColorChanger() {
+  const t = getTranslations();
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -34,7 +36,7 @@ export default function ColorChanger() {
     if (!file) return;
     
     if (!file.type.startsWith('image/')) {
-      setError('Please select an image file');
+      setError(t.tools.common.errorSelectImage);
       return;
     }
     
@@ -56,6 +58,10 @@ export default function ColorChanger() {
     setTimeout(() => {
       try {
         const canvas = canvasRef.current;
+        if (!canvas) {
+          throw new Error('Canvas not available');
+        }
+        
         const ctx = canvas.getContext('2d');
         
         if (!ctx) {
@@ -95,7 +101,7 @@ export default function ColorChanger() {
         img.src = originalImage;
         
       } catch (err) {
-        setError('Failed to process image');
+        setError(t.tools.common.errorProcessImage);
         setIsProcessing(false);
         console.error(err);
       }
@@ -116,11 +122,11 @@ export default function ColorChanger() {
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        Color Changer
+        {t.tools.colorChanger.name}
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Change the colors of your image using hue, saturation, and brightness controls.
+        {t.tools.colorChanger.description}
       </Typography>
       
       {error && (
@@ -134,11 +140,11 @@ export default function ColorChanger() {
         <Grid item xs={12} md={4}>
           <Paper elevation={2} sx={{ p: 3, height: '100%' }}>
             <Typography variant="h6" gutterBottom>
-              Color Settings
+              {t.tools.colorChanger.colorSettings}
             </Typography>
             
             <Box sx={{ mb: 3 }}>
-              <Typography gutterBottom>Hue</Typography>
+              <Typography gutterBottom>{t.tools.colorChanger.hue}</Typography>
               <Slider
                 value={hue}
                 onChange={(_, value) => setHue(value as number)}
@@ -150,7 +156,7 @@ export default function ColorChanger() {
             </Box>
             
             <Box sx={{ mb: 3 }}>
-              <Typography gutterBottom>Saturation</Typography>
+              <Typography gutterBottom>{t.tools.colorChanger.saturation}</Typography>
               <Slider
                 value={saturation}
                 onChange={(_, value) => setSaturation(value as number)}
@@ -162,7 +168,7 @@ export default function ColorChanger() {
             </Box>
             
             <Box sx={{ mb: 3 }}>
-              <Typography gutterBottom>Brightness</Typography>
+              <Typography gutterBottom>{t.tools.colorChanger.brightness}</Typography>
               <Slider
                 value={brightness}
                 onChange={(_, value) => setBrightness(value as number)}
@@ -189,7 +195,7 @@ export default function ColorChanger() {
                 fullWidth
                 sx={{ mb: 2 }}
               >
-                Upload Image
+                {t.tools.common.uploadImage}
               </Button>
               
               <Button
@@ -201,7 +207,7 @@ export default function ColorChanger() {
                 fullWidth
                 sx={{ mb: 2 }}
               >
-                {isProcessing ? <CircularProgress size={24} /> : 'Apply Color Changes'}
+                {isProcessing ? <CircularProgress size={24} /> : t.tools.colorChanger.applyButton}
               </Button>
               
               <Button
@@ -211,7 +217,7 @@ export default function ColorChanger() {
                 disabled={!processedImage}
                 fullWidth
               >
-                Download Result
+                {t.tools.common.downloadResult}
               </Button>
             </Box>
           </Paper>
@@ -221,13 +227,13 @@ export default function ColorChanger() {
         <Grid item xs={12} md={8}>
           <Paper elevation={2} sx={{ p: 3, height: '100%' }}>
             <Typography variant="h6" gutterBottom>
-              Preview
+              {t.tools.common.preview}
             </Typography>
             
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
               <Box sx={{ flex: 1, minWidth: '280px' }}>
                 <Typography variant="subtitle1" gutterBottom>
-                  Original Image
+                  {t.tools.common.originalImage}
                 </Typography>
                 <Box
                   sx={{
@@ -248,7 +254,7 @@ export default function ColorChanger() {
                     />
                   ) : (
                     <Typography variant="body2" color="text.secondary">
-                      Upload an image to get started
+                      {t.tools.common.uploadToStart}
                     </Typography>
                   )}
                 </Box>
@@ -256,7 +262,7 @@ export default function ColorChanger() {
               
               <Box sx={{ flex: 1, minWidth: '280px' }}>
                 <Typography variant="subtitle1" gutterBottom>
-                  Processed Image
+                  {t.tools.common.processedImage}
                 </Typography>
                 <Box
                   sx={{
@@ -279,7 +285,7 @@ export default function ColorChanger() {
                     />
                   ) : (
                     <Typography variant="body2" color="text.secondary">
-                      Apply changes to see the result
+                      {t.tools.colorChanger.applyToSee}
                     </Typography>
                   )}
                 </Box>

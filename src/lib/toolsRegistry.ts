@@ -1,29 +1,33 @@
 import { Tool } from '@/types/tools';
+import { getTranslations } from './i18n';
+
+// Get translations
+const t = getTranslations();
 
 // Define all available tools
 export const toolsList: Tool[] = [
   {
     id: 'transparent-trimmer',
-    name: 'Transparent Area Trimmer',
-    description: 'Automatically trim transparent areas from images',
+    name: t.tools.transparentTrimmer.name,
+    description: t.tools.transparentTrimmer.description,
     icon: 'CropFree',
   },
   {
     id: 'color-changer',
-    name: 'Color Changer',
-    description: 'Change specific colors in your images',
+    name: t.tools.colorChanger.name,
+    description: t.tools.colorChanger.description,
     icon: 'Palette',
   },
   {
     id: 'resize-tool',
-    name: 'Resize Tool',
-    description: 'Resize images to specific dimensions',
+    name: 'リサイズツール',
+    description: '画像を特定のサイズに変更します',
     icon: 'PhotoSizeSelectLarge',
   },
   {
     id: 'text-overlay',
-    name: 'Text Overlay',
-    description: 'Add text to your images',
+    name: 'テキストオーバーレイ',
+    description: '画像にテキストを追加します',
     icon: 'TextFields',
   },
 ];

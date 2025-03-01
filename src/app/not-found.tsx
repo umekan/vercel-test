@@ -2,8 +2,10 @@ import React from 'react';
 import { Box, Typography, Button, Paper } from '@mui/material';
 import Link from 'next/link';
 import AppLayout from '@/components/layout/AppLayout';
+import { getTranslations } from '@/lib/i18n';
 
 export default function NotFound() {
+  const t = getTranslations();
   return (
     <AppLayout>
       <Box
@@ -29,16 +31,16 @@ export default function NotFound() {
           </Typography>
           
           <Typography variant="h5" gutterBottom>
-            Page Not Found
+            {t.pages.notFound.title}
           </Typography>
           
           <Typography variant="body1" color="text.secondary" paragraph>
-            The tool or page you're looking for doesn't exist or has been moved.
+            {t.pages.notFound.message}
           </Typography>
           
           <Link href="/" passHref>
             <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-              Back to Home
+              {t.common.backToHome}
             </Button>
           </Link>
         </Paper>

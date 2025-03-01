@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import { 
-  Box, 
-  Button, 
-  Typography, 
-  Paper, 
+import {
+  Box,
+  Button,
+  Typography,
+  Paper,
   Divider,
   Slider,
   FormControlLabel,
@@ -17,8 +17,10 @@ import {
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DownloadIcon from '@mui/icons-material/Download';
 import CropIcon from '@mui/icons-material/Crop';
+import { getTranslations } from '@/lib/i18n';
 
 export default function TransparentTrimmer() {
+  const t = getTranslations();
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -39,7 +41,7 @@ export default function TransparentTrimmer() {
     if (!file) return;
     
     if (!file.type.startsWith('image/')) {
-      setError('Please select an image file');
+      setError(t.tools.common.errorSelectImage);
       return;
     }
     
@@ -61,6 +63,10 @@ export default function TransparentTrimmer() {
     setTimeout(() => {
       try {
         const canvas = canvasRef.current;
+        if (!canvas) {
+          throw new Error('Canvas not available');
+        }
+        
         const ctx = canvas.getContext('2d');
         
         if (!ctx) {
@@ -97,10 +103,10 @@ export default function TransparentTrimmer() {
           
           // Draw the trimmed image
           trimmedCtx.drawImage(
-            canvas, 
-            border, border, 
+            canvas,
+            border, border,
             canvas.width - (border * 2), canvas.height - (border * 2),
-            0, 0, 
+            0, 0,
             trimmedCanvas.width, trimmedCanvas.height
           );
           
@@ -112,7 +118,7 @@ export default function TransparentTrimmer() {
         img.src = originalImage;
         
       } catch (err) {
-        setError('Failed to process image');
+        setError(t.tools.common.errorProcessImage);
         setIsProcessing(false);
         console.error(err);
       }
@@ -133,12 +139,11 @@ export default function TransparentTrimmer() {
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        Transparent Area Trimmer
+        {t.tools.transparentTrimmer.name}
       </Typography>
       
       <Typography variant="body1" paragraph>
-        This tool automatically detects and trims transparent areas from your images.
-        Upload a PNG with transparency to get started.
+        {t.tools.transparentTrimmer.description}
       </Typography>
       
       {error && (
@@ -152,11 +157,11 @@ export default function TransparentTrimmer() {
         <Grid item xs={12} md={4}>
           <Paper elevation={2} sx={{ p: 3, height: '100%' }}>
             <Typography variant="h6" gutterBottom>
-              Settings
+              {t.tools.common.settings}
             </Typography>
             
             <Box sx={{ mb: 3 }}>
-              <Typography gutterBottom>Transparency Threshold</Typography>
+              <Typography gutterBottom>{t.tools.transparentTrimmer.transparencyThreshold}</Typography>
               <Slider
                 value={threshold}
                 onChange={(_, value) => setThreshold(value as number)}
@@ -168,7 +173,7 @@ export default function TransparentTrimmer() {
             </Box>
             
             <Box sx={{ mb: 3 }}>
-              <Typography gutterBottom>Padding (px)</Typography>
+              <Typography gutterBottom>{t.tools.transparentTrimmer.padding}</Typography>
               <Slider
                 value={padding}
                 onChange={(_, value) => setPadding(value as number)}
@@ -187,7 +192,7 @@ export default function TransparentTrimmer() {
                   disabled={!originalImage}
                 />
               }
-              label="Preserve Aspect Ratio"
+              label={t.tools.transparentTrimmer.preserveAspectRatio}
             />
             
             <Box sx={{ mt: 4 }}>
@@ -206,7 +211,7 @@ export default function TransparentTrimmer() {
                 fullWidth
                 sx={{ mb: 2 }}
               >
-                Upload Image
+                {t.tools.common.uploadImage}
               </Button>
               
               <Button
@@ -218,7 +223,7 @@ export default function TransparentTrimmer() {
                 fullWidth
                 sx={{ mb: 2 }}
               >
-                {isProcessing ? <CircularProgress size={24} /> : 'Trim Transparent Areas'}
+                {isProcessing ? <CircularProgress size={24} /> : t.tools.transparentTrimmer.trimButton}
               </Button>
               
               <Button
@@ -228,7 +233,7 @@ export default function TransparentTrimmer() {
                 disabled={!processedImage}
                 fullWidth
               >
-                Download Result
+                {t.tools.common.downloadResult}
               </Button>
             </Box>
           </Paper>
@@ -238,13 +243,13 @@ export default function TransparentTrimmer() {
         <Grid item xs={12} md={8}>
           <Paper elevation={2} sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" gutterBottom>
-              Preview
+              {t.tools.common.preview}
             </Typography>
             
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, flexGrow: 1 }}>
               <Box sx={{ flex: 1, minWidth: '280px' }}>
                 <Typography variant="subtitle1" gutterBottom>
-                  Original Image
+                  {t.tools.common.originalImage}
                 </Typography>
                 <Box
                   sx={{
@@ -266,7 +271,7 @@ export default function TransparentTrimmer() {
                     />
                   ) : (
                     <Typography variant="body2" color="text.secondary">
-                      Upload an image to get started
+                      {t.tools.common.uploadToStart}
                     </Typography>
                   )}
                 </Box>
@@ -276,7 +281,7 @@ export default function TransparentTrimmer() {
               
               <Box sx={{ flex: 1, minWidth: '280px' }}>
                 <Typography variant="subtitle1" gutterBottom>
-                  Processed Image
+                  {t.tools.common.processedImage}
                 </Typography>
                 <Box
                   sx={{
@@ -300,7 +305,7 @@ export default function TransparentTrimmer() {
                     />
                   ) : (
                     <Typography variant="body2" color="text.secondary">
-                      Process an image to see the result
+                      {t.tools.transparentTrimmer.processToSee}
                     </Typography>
                   )}
                 </Box>

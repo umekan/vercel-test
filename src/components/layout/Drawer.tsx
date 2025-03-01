@@ -1,12 +1,12 @@
 "use client";
 
 import React from 'react';
-import { 
-  Drawer, 
-  List, 
-  ListItem, 
-  ListItemButton, 
-  ListItemIcon, 
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
   ListItemText,
   Divider,
   Box,
@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { useRouter, usePathname } from 'next/navigation';
 import { toolsList } from '@/lib/toolsRegistry';
+import { getTranslations } from '@/lib/i18n';
 import Image from 'next/image';
 
 // Dynamically import Material UI icons
@@ -41,6 +42,7 @@ const iconMap: Record<string, React.ComponentType> = {
 export default function Sidebar({ drawerWidth, mobileOpen, handleDrawerToggle }: SidebarProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const t = getTranslations();
 
   const handleToolSelect = (toolId: string) => {
     router.push(`/tools/${toolId}`);
@@ -54,15 +56,15 @@ export default function Sidebar({ drawerWidth, mobileOpen, handleDrawerToggle }:
   const drawer = (
     <div>
       <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-        <Image 
-          src="/next.svg" 
-          alt="Logo" 
-          width={100} 
-          height={30} 
+        <Image
+          src="/next.svg"
+          alt="Logo"
+          width={100}
+          height={30}
           className="dark:invert"
         />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Image Tools
+          {t.common.imageTools}
         </Typography>
       </Box>
       <Divider />
@@ -75,7 +77,7 @@ export default function Sidebar({ drawerWidth, mobileOpen, handleDrawerToggle }:
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary="Home" />
+            <ListItemText primary={t.common.home} />
           </ListItemButton>
         </ListItem>
       </List>

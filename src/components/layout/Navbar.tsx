@@ -1,12 +1,12 @@
 "use client";
 
 import React from 'react';
-import { 
-  AppBar, 
-  Toolbar, 
-  IconButton, 
-  Typography, 
-  Button, 
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Button,
   Box,
   useMediaQuery,
   useTheme
@@ -14,6 +14,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import { usePathname } from 'next/navigation';
 import { getToolById } from '@/lib/toolsRegistry';
+import { getTranslations } from '@/lib/i18n';
 
 interface NavbarProps {
   drawerWidth: number;
@@ -24,22 +25,23 @@ export default function Navbar({ drawerWidth, handleDrawerToggle }: NavbarProps)
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const pathname = usePathname();
+  const t = getTranslations();
 
   // Get page title based on the current path
   const getPageTitle = () => {
     if (pathname === '/') {
-      return 'Image Processing Tools';
+      return t.common.appName;
     }
     
     if (pathname.startsWith('/tools/')) {
       const toolId = pathname.split('/').pop();
       if (toolId) {
         const tool = getToolById(toolId);
-        return tool ? tool.name : 'Tool Not Found';
+        return tool ? tool.name : t.common.toolNotFound;
       }
     }
     
-    return 'Image Processing Tools';
+    return t.common.appName;
   };
 
   return (
@@ -65,8 +67,8 @@ export default function Navbar({ drawerWidth, handleDrawerToggle }: NavbarProps)
         </Typography>
         {!isMobile && (
           <Box>
-            <Button color="inherit">Help</Button>
-            <Button color="inherit">About</Button>
+            <Button color="inherit">{t.common.help}</Button>
+            <Button color="inherit">{t.common.about}</Button>
           </Box>
         )}
       </Toolbar>

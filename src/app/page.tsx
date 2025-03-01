@@ -1,29 +1,31 @@
 // src/app/page.tsx
 import React from 'react';
-import { 
-  Typography, 
-  Grid, 
-  Card, 
-  CardContent, 
-  CardActions, 
-  Button 
+import {
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardActions,
+  Button
 } from '@mui/material';
 import { toolsList } from '@/lib/toolsRegistry';
+import { getTranslations } from '@/lib/i18n';
 import Link from 'next/link';
 import AppLayout from '@/components/layout/AppLayout';
 
 // Dynamic imports for Material UI icons
 
 export default function HomePage() {
+  const t = getTranslations();
   return (
     <AppLayout>
       <div className="flex flex-col gap-6">
         <div className="text-center mb-8">
           <Typography variant="h3" component="h1" gutterBottom>
-            Image Processing Tools
+            {t.pages.home.title}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-            A collection of useful tools for working with images
+            {t.pages.home.subtitle}
           </Typography>
         </div>
 
@@ -53,7 +55,7 @@ export default function HomePage() {
                 </CardContent>
                 <CardActions>
                   <Link href={`/tools/${tool.id}`} passHref>
-                    <Button size="small">Open Tool</Button>
+                    <Button size="small">{t.common.openTool}</Button>
                   </Link>
                 </CardActions>
               </Card>
@@ -63,7 +65,7 @@ export default function HomePage() {
 
         <div className="mt-12 text-center">
           <Typography variant="body1">
-            Select a tool from the sidebar or cards above to get started.
+            {t.pages.home.selectTool}
           </Typography>
         </div>
       </div>
