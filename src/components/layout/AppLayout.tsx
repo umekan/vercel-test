@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import { Box, Toolbar, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Sidebar from './Drawer';
 import Navbar from './Navbar';
-import { usePathname } from 'next/navigation';
-import { getToolById } from '@/lib/toolsRegistry';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -14,7 +12,6 @@ interface AppLayoutProps {
 export default function AppLayout({ children }: AppLayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const drawerWidth = 240;
-  const pathname = usePathname();
 
   // Create a theme based on system preference
   const theme = createTheme({

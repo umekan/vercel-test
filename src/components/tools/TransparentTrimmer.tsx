@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import {
   Box,
   Button,
@@ -73,7 +74,7 @@ export default function TransparentTrimmer() {
           throw new Error('Could not get canvas context');
         }
         
-        const img = new Image();
+        const img = new window.Image();
         img.onload = () => {
           // This is where you would implement the actual transparent area trimming
           // For demonstration, we're just drawing the image with some modifications
@@ -264,10 +265,12 @@ export default function TransparentTrimmer() {
                   }}
                 >
                   {originalImage ? (
-                    <img
+                    <Image
                       src={originalImage}
                       alt="Original"
-                      style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                      style={{ objectFit: 'contain' }}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   ) : (
                     <Typography variant="body2" color="text.secondary">
@@ -298,10 +301,12 @@ export default function TransparentTrimmer() {
                   {isProcessing ? (
                     <CircularProgress />
                   ) : processedImage ? (
-                    <img
+                    <Image
                       src={processedImage}
                       alt="Processed"
-                      style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                      style={{ objectFit: 'contain' }}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   ) : (
                     <Typography variant="body2" color="text.secondary">
