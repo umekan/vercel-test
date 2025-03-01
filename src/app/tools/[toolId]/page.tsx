@@ -12,12 +12,8 @@ const toolComponents: Record<string, React.ComponentType> = {
   // Add more tool components as you create them
 };
 
-// Next.js 15向けに修正したページコンポーネント
-export default async function ToolPage({
-  params,
-}: {
-  params: { toolId: string };
-}) {
+// 型注釈を削除して Next.js に推論させる
+export default async function ToolPage({ params }) {
   const { toolId } = params;
   const tool = getToolById(toolId);
   
