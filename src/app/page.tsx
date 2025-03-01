@@ -15,7 +15,7 @@ import AppLayout from '@/components/layout/AppLayout';
 
 // Dynamic imports for Material UI icons
 
-export default function HomePage() {
+export default async function HomePage() {
   const t = getTranslations();
   return (
     <AppLayout>

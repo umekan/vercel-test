@@ -12,13 +12,16 @@ const toolComponents: Record<string, React.ComponentType> = {
   // Add more tool components as you create them
 };
 
-interface ToolPageProps {
-  params: {
-    toolId: string;
-  };
+// Use the Next.js PageProps type instead of a custom interface
+interface Params {
+  toolId: string;
 }
 
-export default function ToolPage({ params }: ToolPageProps) {
+export default async function ToolPage({
+  params,
+}: {
+  params: Params;
+}) {
   const { toolId } = params;
   const tool = getToolById(toolId);
   

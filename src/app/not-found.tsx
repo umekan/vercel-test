@@ -4,7 +4,7 @@ import Link from 'next/link';
 import AppLayout from '@/components/layout/AppLayout';
 import { getTranslations } from '@/lib/i18n';
 
-export default function NotFound() {
+export default async function NotFound() {
   const t = getTranslations();
   return (
     <AppLayout>
